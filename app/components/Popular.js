@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import Card from "./Card";
 import Tooltip from "./Tooltip";
+import Loading from "./Loading";
 
 function LanguagesNav({ selected, onUpdateLanguage }) {
   const languages = ["All", "JavaScript", "Ruby", "Java", "CSS", "Python"];
@@ -94,24 +95,17 @@ ReposGrid.propTypes = {
 };
 
 export default class Popular extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      selectedLanguage: "All",
-      error: null,
-      repos: {},
-    };
-
-    this.updateLanguage = this.updateLanguage.bind(this);
-    this.isLoading = this.isLoading.bind(this);
-  }
+  state = {
+    selectedLanguage: "All",
+    error: null,
+    repos: {},
+  };
 
   componentDidMount() {
     this.updateLanguage(this.state.selectedLanguage);
   }
 
-  updateLanguage(selectedLanguage) {
+  updateLanguage = (selectedLanguage) => {
     this.setState({
       selectedLanguage,
       error: null,
@@ -136,12 +130,12 @@ export default class Popular extends Component {
           });
         });
     }
-  }
+  };
 
-  isLoading() {
+  isLoading = () => {
     const { selectedLanguage, repos, error } = this.state;
     return !repos[selectedLanguage] && error === null;
-  }
+  };
 
   render() {
     const { selectedLanguage, repos, error } = this.state;
@@ -152,7 +146,7 @@ export default class Popular extends Component {
           selected={selectedLanguage}
           onUpdateLanguage={this.updateLanguage}
         />
-        {this.isLoading() && <p>LOADING</p>}
+        {this.isLoading() && <Loading />}
 
         {error && <p className="center-text error">{error}</p>}
 

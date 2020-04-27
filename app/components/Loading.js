@@ -13,13 +13,10 @@ const styles = {
 };
 
 export default class Loading extends Component {
-  constructor(props) {
-    super(props);
+  state = {
+    content: this.props.text,
+  };
 
-    this.state = {
-      content: this.props.text,
-    };
-  }
   componentDidMount() {
     const { text, speed } = this.props;
 
